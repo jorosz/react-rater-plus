@@ -1,0 +1,37 @@
+:root {
+    --react-rater-link: #ccc;
+    --react-rater-hover: #666;
+    --react-rater-active: #000;
+}
+
+.rater {
+    display: inline-block;
+    line-height: normal;
+
+    & a {
+        cursor: pointer;
+        color: var(--react-rater-link);
+        position: relative;
+
+        &.willBeActive {
+            color: var(--react-rater-hover);
+        }
+
+        &.active {
+            color: var(--react-rater-active);
+        }
+
+        &.halfActive:before {
+            color: var(--react-rater-active);
+            content: '\2605';
+            position: absolute;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        &.disabled {
+            cursor: default;
+        }
+    }
+}
