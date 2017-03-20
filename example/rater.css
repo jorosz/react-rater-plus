@@ -1,0 +1,20 @@
+:root {
+    --react-rater-hover: #600;
+    --react-rater-active: #000;
+}
+
+.rater {
+    & a {
+        &.willBeActive {
+            color: var(--react-rater-hover);
+        }
+        &.active {
+            color: var(--react-rater-active);
+        }
+        &.halfActive {
+            & span {
+                color: var(--react-rater-active);
+            }
+        }
+    }
+}

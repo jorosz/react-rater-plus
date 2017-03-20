@@ -1,7 +1,7 @@
 :root {
-    --react-rater-link: #ccc;
+    --react-rater-basic: #ccc;
     --react-rater-hover: #666;
-    --react-rater-active: #000;
+    --react-rater-active: #f4e242;
 }
 
 .rater {
@@ -10,7 +10,7 @@
 
     & a {
         cursor: pointer;
-        color: var(--react-rater-link);
+        color: var(--react-rater-basic);
         position: relative;
 
         &.willBeActive {
@@ -21,9 +21,8 @@
             color: var(--react-rater-active);
         }
 
-        &.halfActive:before {
+        &.halfActive span {
             color: var(--react-rater-active);
-            content: '\2605';
             position: absolute;
             left: 0;
             width: 50%;

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import {ThemedRater as Rater} from '../src/Rater'
+import theme from './rater.css'
 
 class Face extends Component {
   render() {
@@ -9,14 +10,14 @@ class Face extends Component {
       normal: '😐',
       good: '😍'
     }
-    let { isActive, willBeActive, icon, onMouseEnter, onClick } = this.props
-    let faceicon = (isActive || willBeActive)? icons[icon] : '😶'
+    let { active, willBeActive, icon, onMouseEnter, onClick } = this.props
+    let faceicon = (active || willBeActive)? icons[icon] : '😶'
     return (<span onMouseEnter={onMouseEnter} onClick={onClick}>{faceicon}</span>)
   }
 }
 
 Face.propTypes = {
-  isActive: PropTypes.bool,
+  active: PropTypes.bool,
   willBeActive: PropTypes.bool,
   isDisabled: PropTypes.bool,
   icon: PropTypes.string,
@@ -31,71 +32,79 @@ class Example extends Component {
       rating: 0
     }
   }
-  handleRate(e) {
+  handleRate(newRate) {
     this.setState({
-      rating: e.rating
+      rating: newRate
     })
-    // lastRating is not undefined,
-    // which means user have rated
-    if (e.lastRating !== void 0) {
-      alert('You rated ' + e.rating)
-    }
   }
   render() {
     return (
       <div>
-        <h1>React Star Rater</h1>
+        <h1>React Rater Plus - Examples</h1>
         <dl>
-          <dt>Plain tag:</dt>
+          <dt>Plain tag (read-only)</dt>
           <dd>
             <pre>
               <code>
-                {'<Rater />'}
+                {'<Rater rating={3} />'}
               </code>
             </pre>
-            <Rater />
+            <Rater rating={3} />
           </dd>
-          <dt>Retrieve rating value by setting a callback on <code>onRate</code></dt>
+          <dt>Make it interactive by setting a callback in the <code>onRate</code> property, which will be invoked with a new rating value. Note that the callback function needs to update the <code>rating</code> prop in line with Flux architecture concepts, otherwise the value does not change</dt>
           <dd>
             <pre>
               <code>
-                {'<Rater onRate={this.handleRate.bind(this)} />'}
+                {'<Rater rating={'}{this.state.rating}{'} onRate={this.handleRate.bind(this)} />'}
               </code>
             </pre>
             <Rater rating={this.state.rating} onRate={this.handleRate.bind(this)} />
             <span>{ 'Rating value: ' + this.state.rating}</span>
           </dd>
-          <dt>Read-only</dt>
+
+          <dt>Display fractional value</dt>
           <dd>
             <pre>
               <code>
-                {'<Rater interactive={false} rating={3} />'}
+                {'<Rater rating={3.6} />'}
               </code>
             </pre>
-            <Rater interactive={false} rating={3} />
+            <Rater rating={3.6} />
           </dd>
-          <dt>Read-only</dt>
-          <dd>
-            <pre>
-              <code>
-                {'<Rater interactive={false} rating={3.6} />'}
-              </code>
-            </pre>
-            <Rater interactive={false} rating={3.6} />
-          </dd>
-          <dt>Customize star</dt>
+          <dt>Customize theme with react-css-themr using <code>theme</code> attribute</dt>
           <dd>
             <pre>
               <code>
                 {`
-<Rater total={3}>
+import theme from './custom-theme.css'
+<Rater theme={theme} rating=2.6 onRate=function() />
+`}
+              </code>
+            </pre>
+            <Rater theme={theme} rating={2.6} onRate={()=>true}/>
+          </dd>
+          <dt>Customize 'star' with custom string (without using child elements)</dt>
+          <dd>
+            <pre>
+              <code>
+                {'<Rater item="♥︎" rating=2.6 onRate=function() />'}
+              </code>
+            </pre>
+            <Rater item="♥︎" rating={2.6} onRate={()=>true}/>
+          </dd>
+          <dt>Customize star with child items - both classes and properties passed to children</dt>
+          <dd>
+            <pre>
+              <code>
+                {`
+<Rater total={3} onRate=function()>
   <Face icon="bad" />
   <Face icon="normal" />
   <Face icon="good" />
 </Rater>`.trim()}
               </code>
             </pre>
-            <Rater total={3} className="face-rater">
+            <Rater total={3} className="face-rater" onRate={()=>(true)}>
               <Face icon="bad" />
               <Face icon="normal" />
               <Face icon="good" />

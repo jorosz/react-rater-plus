@@ -12,8 +12,11 @@ export class Rater extends Component {
     this.onCancelRate = this.setRate.bind(this, null);
     this.onRate = []
     this.willRate = []
+    this.interactive = false;
+
     for (let i = this.props.total - 1; i >= 0; i--) {
       if (typeof(this.props.onRate) === 'function') {
+        this.interactive = true; // Enable interactivity
         this.onRate[i] = () => {
           this.props.onRate(i + 1)
         }
@@ -32,11 +35,11 @@ export class Rater extends Component {
   }
 
   render() {
-    let {
+    const {
       theme,
       total,
-      interactive,
       rating,
+      item,
       ...restProps
     } = this.props
 
@@ -44,45 +47,52 @@ export class Rater extends Component {
     delete restProps.children;
 
     let newRating = this.state && this.state.newRating;
-    let children = this.props.children ? this.props.children.filter(Boolean) : [];
+    let children = this.props.children
+      ? this.props.children.filter(Boolean)
+      : [];
 
     let nodes = Array(total).fill(1).map((_, i) => {
-      let props = {
-        key: i
+      const tags = {
+        active: !newRating && rating - i >= 1,
+        willBeActive: !!newRating && i < newRating,
+        halfActive: !newRating && rating - i >= 0.5 && rating - i < 1,
+        disabled: !this.interactive
+      }
+
+      const props = {
+        // sets key
+        key: i,
+        // maps tags to classnames from theme
+        className: Object.keys(tags).map(tag => (tags[tag] && theme[tag])).filter(Boolean).join(" "),
+        // callback for willRate
+        onMouseEnter: this.interactive && typeof(this.willRate[i]) === 'function' ? this.willRate[i] : null,
+        // callback for onClick
+        onClick: this.interactive && typeof(this.onRate[i]) === 'function' ? this.onRate[i] : null
       };
 
-      props.className = [
-        !newRating && rating - i >= 1 && theme.active,
-        !!newRating && i < newRating && theme.willBeActive,
-        !newRating && rating - i >= 0.5 && rating - i < 1 && theme.halfActive,
-        !interactive && theme.disabled
-      ].filter(Boolean).join(" ");
-
-      if (interactive) {
-        if (typeof(this.willRate[i]) === 'function')
-          props.onMouseEnter = this.willRate[i];
-        if (typeof(this.onRate[i]) === 'function')
-          props.onClick = this.onRate[i];
-        }
-
       if (children.length) {
-        return React.cloneElement(children[i % children.length], props)
+        return React.cloneElement(children[i % children.length],{
+          ...props,
+          ...tags
+        })
+      } else if (tags.halfActive) {
+        // Render extra item to display half item
+        return (
+          <a {...props}><span>{item}</span>{item}</a>
+        )
       } else {
-        return (<a {...props}>★</a>)
+        return (
+          <a {...props}>{item}</a>
+        )
       }
     })
 
-    if (interactive) {
-      return (
-        <div className={theme['rater']} onMouseLeave={this.onCancelRate} {...restProps}>
-          {nodes}
-        </div>
-      )
-    } else {
-      return (
-        <div className={theme['rater']} {...restProps}>{nodes}</div>
-      )
-    }
+    // Set onMouseLeave for props on div when interactive
+    if (this.interactive) restProps.onMouseLeave=this.onCancelRate;
+
+    return (
+      <div className={theme['rater']} {...restProps}>{nodes}</div>
+    )
   }
 }
 
@@ -90,16 +100,17 @@ Rater.propTypes = {
   theme: PropTypes.object,
   total: PropTypes.number,
   rating: PropTypes.number,
-  interactive: PropTypes.bool,
   children: PropTypes.any,
-  onRate: PropTypes.func
+  onRate: PropTypes.func,
+  item: PropTypes.any
 }
 
 Rater.defaultProps = {
   total: 5,
   rating: 0,
-  interactive: true,
-  theme: {}
+  theme: {},
+  item: "★"
 }
 
-export const ThemedRater = themr('Rater',css)(Rater)
+export const ThemedRater = themr('Rater', css)(Rater);
+export {css};
