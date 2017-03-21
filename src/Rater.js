@@ -65,20 +65,25 @@ export class Rater extends Component {
         // maps tags to classnames from theme
         className: Object.keys(tags).map(tag => (tags[tag] && theme[tag])).filter(Boolean).join(" "),
         // callback for willRate
-        onMouseEnter: this.interactive && typeof(this.willRate[i]) === 'function' ? this.willRate[i] : null,
+        onMouseEnter: this.interactive && typeof(this.willRate[i]) === 'function'
+          ? this.willRate[i]
+          : null,
         // callback for onClick
-        onClick: this.interactive && typeof(this.onRate[i]) === 'function' ? this.onRate[i] : null
+        onClick: this.interactive && typeof(this.onRate[i]) === 'function'
+          ? this.onRate[i]
+          : null
       };
 
       if (children.length) {
-        return React.cloneElement(children[i % children.length],{
+        return React.cloneElement(children[i % children.length], {
           ...props,
           ...tags
         })
       } else if (tags.halfActive) {
         // Render extra item to display half item
         return (
-          <a {...props}><span>{item}</span>{item}</a>
+          <a {...props}>
+            <span>{item}</span>{item}</a>
         )
       } else {
         return (
@@ -88,7 +93,8 @@ export class Rater extends Component {
     })
 
     // Set onMouseLeave for props on div when interactive
-    if (this.interactive) restProps.onMouseLeave=this.onCancelRate;
+    if (this.interactive)
+      restProps.onMouseLeave = this.onCancelRate;
 
     return (
       <div className={theme['rater']} {...restProps}>{nodes}</div>
@@ -108,7 +114,13 @@ Rater.propTypes = {
 Rater.defaultProps = {
   total: 5,
   rating: 0,
-  theme: {},
+  theme: {
+    active: 'active',
+    willBeActive: 'willBeActive',
+    halfActive: 'halfActive',
+    disabled: 'disabled',
+    rater: 'rater'
+  },
   item: "★"
 }
 

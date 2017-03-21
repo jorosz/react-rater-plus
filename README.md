@@ -52,7 +52,9 @@ When using flux/redux this function call would trigger an action callback to upd
 ### Styling via themes
 `react-rater-plus` relies on Webpack and CSS modules so it uses react-css-themr to manage themes. See [react-css-themr](https://github.com/javivelasco/react-css-themr) for usage of the theming component.
 
-The `Rater` component imported by default from `react-rater-plus` is a themed component and comes with its default theme. This default theme can be overridden and customized by creating another CSS module which would be imported. Because react-css-themr will merge the themes it's possible to only override specific settings, for example:
+The `Rater` component imported by default from `react-rater-plus` is a themed component and is bundled with its default theme.
+
+This default theme can be further customized by creating another CSS module which would be imported. Because react-css-themr will merge the themes it's possible to only override specific settings, for example:
 
 mytheme.css
 ```scss
@@ -82,9 +84,8 @@ class Example extends React.Component {
 }
 ```
 
-*Note 1:*  It is still possible to do CSS customization the 'old-way' and assign a `className` property to the rater and use CSS navigation based on this class in the application's CSS. It's rather recommended to use the method above since by adopting react-css-themr themes the entire application can be themed more easily.
-
-*Note 2:* In extreme cases it may be necessary/more simple to import the so-called raw `Rater` component which does not contain ANY default theming or CSS. In this case the entire theme has to be provided to the component via a `theme` property.
+### Raw theming/styling
+In extreme cases it may be simpler to import the so-called raw `Rater` component which does not contain ANY default theming or CSS from the `{Rater}` export. Because the raw component lacks any styling, the entire theme has to be provided to the component via a `theme` property as a CSS module object:
 
 ```javascript
 import theme from './entire-rating-styling.css'
@@ -97,7 +98,7 @@ class Example extends React.Component {
 }
 ```
 
-If the raw component is imported and used without a proper CSS theme it will be not working properly.
+The raw component also defaults to using 'static' classnames in the absence of a `theme` property. So using the raw component without a `theme` makes it possible to do CSS customization the 'old-way' using CSS global styles, where a stylesheet has to be bundled with the application providing the global styles for all states (see bundled `rater.css` for example). It's also possible to `@include` the `rater.css` when using SASS.
 
 ### Customizing the 'star' items
 If you want to change the the rater to use items other than stars, you can either specify them as the `item` property or use children which accept properties.
