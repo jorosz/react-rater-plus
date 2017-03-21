@@ -9,7 +9,7 @@ const webpackModule = {
       loader: 'babel-loader'
     }, {
       test: /\.css$/,
-      use: ['style-loader','css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:3]', 'postcss-loader']
+      use: ['style-loader','css-loader?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:3]','postcss-loader']
     }, {
       test: /\.js$/,
       exclude: /node_modules/,
@@ -31,9 +31,9 @@ const webpackModule = {
         umdNamedDefine: true
       },
       module: webpackModule,
-      resolve: {
-        modules: ['node_modules', path.resolve('./src')],
-        extensions: ['.js','.css']
+      externals: {
+        "react-css-themr": "commonjs react-css-themr",
+        "react": "commonjs react",
       }
     },{
       name: 'example',

@@ -9916,7 +9916,13 @@ Rater.propTypes = {
 Rater.defaultProps = {
   total: 5,
   rating: 0,
-  theme: {},
+  theme: {
+    active: 'active',
+    willBeActive: 'willBeActive',
+    halfActive: 'halfActive',
+    disabled: 'disabled',
+    rater: 'rater'
+  },
   item: "★"
 };
 
@@ -9949,8 +9955,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css");
+		module.hot.accept("!!../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -9968,7 +9974,7 @@ exports = module.exports = __webpack_require__(53)();
 
 
 // module
-exports.push([module.i, ".rater_rater_1vA {\n}\n.rater_rater_1vA a {\n}\n.rater_rater_1vA a.rater_willBeActive_2Wt {\n    color: #600\n}\n.rater_rater_1vA a.rater_active_3ve {\n    color: #000\n}\n.rater_rater_1vA a.rater_halfActive_1y1 {\n}\n.rater_rater_1vA a.rater_halfActive_1y1 span {\n    color: #000\n}\n", "", {"version":3,"sources":["/Users/jozseforosz/work/react-rater-plus/example/rater.css"],"names":[],"mappings":"AAKA;CAcC;AAbG;CAYC;AAXG;IACI,WAAgC;CACnC;AACD;IACI,WAAiC;CACpC;AACD;CAIC;AAHG;IACI,WAAiC;CACpC","file":"rater.css","sourcesContent":[":root {\n    --react-rater-hover: #600;\n    --react-rater-active: #000;\n}\n\n.rater {\n    & a {\n        &.willBeActive {\n            color: var(--react-rater-hover);\n        }\n        &.active {\n            color: var(--react-rater-active);\n        }\n        &.halfActive {\n            & span {\n                color: var(--react-rater-active);\n            }\n        }\n    }\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".rater_rater_1vA {\n}\n.rater_rater_1vA a {\n}\n.rater_rater_1vA a.rater_willBeActive_2Wt {\n    color: #600\n}\n.rater_rater_1vA a.rater_active_3ve {\n    color: #000\n}\n.rater_rater_1vA a.rater_halfActive_1y1 {\n}\n.rater_rater_1vA a.rater_halfActive_1y1 span {\n    color: #000\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -9987,7 +9993,7 @@ exports = module.exports = __webpack_require__(53)();
 
 
 // module
-exports.push([module.i, ".rater_rater_Pjc {\n    display: inline-block;\n    line-height: normal\n}\n.rater_rater_Pjc a {\n    cursor: pointer;\n    color: #ccc;\n    position: relative\n}\n.rater_rater_Pjc a.rater_willBeActive_1U9 {\n    color: #666\n}\n.rater_rater_Pjc a.rater_active_3Pu {\n    color: #f4e242\n}\n.rater_rater_Pjc a.rater_halfActive_Nob span {\n    color: #f4e242;\n    position: absolute;\n    left: 0;\n    width: 50%;\n    overflow: hidden\n}\n.rater_rater_Pjc a.rater_disabled_2p_ {\n    cursor: default\n}\n", "", {"version":3,"sources":["/Users/jozseforosz/work/react-rater-plus/src/rater.css"],"names":[],"mappings":"AAMA;IACI,sBAAsB;IACtB,mBAAoB;CA2BvB;AAzBG;IACI,gBAAgB;IAChB,YAAgC;IAChC,kBAAmB;CAqBtB;AAnBG;IACI,WAAgC;CACnC;AAED;IACI,cAAiC;CACpC;AAED;IACI,eAAiC;IACjC,mBAAmB;IACnB,QAAQ;IACR,WAAW;IACX,gBAAiB;CACpB;AAED;IACI,eAAgB;CACnB","file":"rater.css","sourcesContent":[":root {\n    --react-rater-basic: #ccc;\n    --react-rater-hover: #666;\n    --react-rater-active: #f4e242;\n}\n\n.rater {\n    display: inline-block;\n    line-height: normal;\n\n    & a {\n        cursor: pointer;\n        color: var(--react-rater-basic);\n        position: relative;\n\n        &.willBeActive {\n            color: var(--react-rater-hover);\n        }\n\n        &.active {\n            color: var(--react-rater-active);\n        }\n\n        &.halfActive span {\n            color: var(--react-rater-active);\n            position: absolute;\n            left: 0;\n            width: 50%;\n            overflow: hidden;\n        }\n\n        &.disabled {\n            cursor: default;\n        }\n    }\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".rater_rater_Pjc {\n    display: inline-block;\n    line-height: normal\n}\n.rater_rater_Pjc a {\n    cursor: pointer;\n    color: #ccc;\n    position: relative\n}\n.rater_rater_Pjc a.rater_willBeActive_1U9 {\n    color: #666\n}\n.rater_rater_Pjc a.rater_active_3Pu {\n    color: #f4e242\n}\n.rater_rater_Pjc a.rater_halfActive_Nob span {\n    color: #f4e242;\n    position: absolute;\n    left: 0;\n    width: 50%;\n    overflow: hidden\n}\n.rater_rater_Pjc a.rater_disabled_2p_ {\n    cursor: default\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -22675,8 +22681,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css");
+		module.hot.accept("!!../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:3]!../node_modules/postcss-loader/index.js!./rater.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
