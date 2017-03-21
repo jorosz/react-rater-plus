@@ -1,6 +1,6 @@
 {
   "name": "react-rater-plus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A star rater in react.js with support for CSS modules and theming",
   "main": "lib/rater.js",
   "directories": {
