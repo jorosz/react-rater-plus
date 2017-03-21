@@ -30,9 +30,6 @@ const webpackModule = {
         libraryTarget: 'umd',
         umdNamedDefine: true
       },
-      externals: {
-        react: "React"
-      },
       module: webpackModule,
       resolve: {
         modules: ['node_modules', path.resolve('./src')],
