@@ -34,6 +34,8 @@ const webpackModule = {
       externals: {
         "react-css-themr": "commonjs react-css-themr",
         "react": "commonjs react",
+        "react-dom": "commonjs react-dom",
+        "prop-types": "commonjs prop-types"
       }
     },{
       name: 'example',
